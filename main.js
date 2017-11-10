@@ -129,189 +129,295 @@ console.log( 'The total number of transactions is:', totalTransactions );
   HINT(S):
   - Not all transactions are 'sales'.
 */
-var numSales;
 
-/*
-  Hey, welcome to the first question!
-
-  Here's a breakdown of the question, and some pointers on how to get started!
-    - A variable has been declared a few lines above (`numSales`).
-    - Just below, the contents of the `numSales` variable are logged to the console.
-    - Your job is to assign the variable to the correct value (in this case: the total number of sales) *BEFORE* it is logged out.
-    - You can do this by:
-      - Adding an `=` sign (we are *assigning* something after all)
-      - Starting with the `transactions` variable (see the example question);
-      - Adding one or more methods to transform/extract the value we're looking for.
-      - If your solution is correct, `numSales` should be equal to 5.
-
-  You can solve the remaining questions in the same way!
-
-  P.S.
-  The breakdown above takes up a lot of space, feel free to move it to the top or bottom of the file!
-*/
-
+var numSales = 0
+transactions.forEach(function(item){
+  if (item.type === "sale") {
+    numSales++;
+  }
+})
 console.log( 'The total number of sales is:', numSales );
+//
+//
+// /*
+//   Hey, welcome to the first question!
+//
+//   Here's a breakdown of the question, and some pointers on how to get started!
+//     - A variable has been declared a few lines above (`numSales`).
+//     - Just below, the contents of the `numSales` variable are logged to the console.
+//     - Your job is to assign the variable to the correct value (in this case: the total number of sales) *BEFORE* it is logged out.
+//     - You can do this by:
+//       - Adding an `=` sign (we are *assigning* something after all)
+//       - Starting with the `transactions` variable (see the example question);
+//       - Adding one or more methods to transform/extract the value we're looking for.
+//       - If your solution is correct, `numSales` should be equal to 5.
+//
+//   You can solve the remaining questions in the same way!
+//
+//   P.S.
+//   The breakdown above takes up a lot of space, feel free to move it to the top or bottom of the file!
+// */
+//
+
+//
+//
+// // --------------------------------------------------
+// // QUESTION 02
+// // --------------------------------------------------
+// /*
+//   Calculate the total number of 'purchases'.
+// */
+var numPurchases = 0;
+transactions.forEach(function(item){
+  if (item.type === "purchase") {
+    numPurchases++
+  }
+})
 
 
-// --------------------------------------------------
-// QUESTION 02
-// --------------------------------------------------
-/*
-  Calculate the total number of 'purchases'.
-*/
-var numPurchases;
 
 console.log( 'The total number of purchases is:', numPurchases );
+//
+//
+// // --------------------------------------------------
+// // QUESTION 03
+// // --------------------------------------------------
+// /*
+//   Calculate the total number of 'cash' 'sales'.
+//
+//   HINT(S):
+//   - Don't forget that 'purchases' can also be made in 'cash'!
+// */
+var numCashSales = 0;
+transactions.forEach(function(item){
+  if (item.type === "sale" && item.paymentMethod === 'cash') {
+    numCashSales++
+  }
 
 
-// --------------------------------------------------
-// QUESTION 03
-// --------------------------------------------------
-/*
-  Calculate the total number of 'cash' 'sales'.
-
-  HINT(S):
-  - Don't forget that 'purchases' can also be made in 'cash'!
-*/
-var numCashSales;
+})
 
 console.log( 'The total number of cash sales is:', numCashSales );
 
-
-// --------------------------------------------------
-// QUESTION 04
-// --------------------------------------------------
-/*
-  Calculate the total number of 'credit' 'purchases'.
-
-  HINT(S):
-  - Make sure to exclude any 'sales' made by 'credit'!
-*/
-var numCreditPurchases;
+//
+// // --------------------------------------------------
+// // QUESTION 04
+// // --------------------------------------------------
+// /*
+//   Calculate the total number of 'credit' 'purchases'.
+//
+//   HINT(S):
+//   - Make sure to exclude any 'sales' made by 'credit'!
+// */
+var numCreditPurchases = transactions.filter(function(item){
+  if(item.type === "purchase" && item.paymentMethod === "credit"){
+    return item
+  }
+}).reduce(function(sum,item){
+  return sum += 1;
+},0)
 
 console.log( 'The total number of credit purchases is:', numCreditPurchases );
+//
+//
+// // --------------------------------------------------
+// // QUESTION 05
+// // --------------------------------------------------
+// /*
+//   Create an array that includes all of vendors which appear in the transactions data set.
+//   eg. `[ 'vendor one', 'vendor two', ... ]
+//
+//   HINT(S):
+//   - Not all transactions have a 'vendor'!
+//   - The assembled array should be made up of strings, not full `transaction` objects.
+//   - This array is allowed to contain duplicate values.
+// */
+var uniqueVendors = transactions.filter(function(item, index, transactions){
+  if (item.vendor){
+  return item }
+}).map(function(item){
+  return item.vendor;
+}).filter(function(item, index, vendors){
+  if(vendors.indexOf(item) === index){
+    return item
+  }
+})
 
-
-// --------------------------------------------------
-// QUESTION 05
-// --------------------------------------------------
-/*
-  Create an array that includes all of vendors which appear in the transactions data set.
-  eg. `[ 'vendor one', 'vendor two', ... ]
-
-  HINT(S):
-  - Not all transactions have a 'vendor'!
-  - The assembled array should be made up of strings, not full `transaction` objects.
-  - This array is allowed to contain duplicate values.
-*/
-var uniqueVendors;
 
 console.log( 'The unique vendors are:', uniqueVendors );
+//
+//
+// // --------------------------------------------------
+// // QUESTION 06
+// // --------------------------------------------------
+// /*
+//   Create an array that includes all of *unique* customers which appear in the transactions data set.
+//   eg. `[ 'customer one', 'customer two', ... ]
+//
+//   HINT(S):
+//   - Not all transactions have a 'customer'!
+//   - The assembled array should be made up of strings, not full `transaction` objects.
+//   - Make sure that the resulting array *does not* include any duplicates.
+// */
+var uniqueCustomers = transactions.filter(function(item) {
+  if(item.customer){
+    return item
+  }
+}).map(function(item){
+  return item.customer
+}).filter(function(item, index, customers){
+  if(customers.indexOf(item) === index){
+    return index
+  }
+})
 
 
-// --------------------------------------------------
-// QUESTION 06
-// --------------------------------------------------
-/*
-  Create an array that includes all of *unique* customers which appear in the transactions data set.
-  eg. `[ 'customer one', 'customer two', ... ]
 
-  HINT(S):
-  - Not all transactions have a 'customer'!
-  - The assembled array should be made up of strings, not full `transaction` objects.
-  - Make sure that the resulting array *does not* include any duplicates.
-*/
-var uniqueCustomers;
 
 console.log( 'The unique customers are:', uniqueCustomers );
+//
+//
+// // --------------------------------------------------
+// // QUESTION 07
+// // --------------------------------------------------
+// /*
+//   Create an array of information about the 'sale' transactions which include 5 or more items.
+//
+//   The array should resemble the following:
+//   [ { name: 'Customer Name', numItems: 5 }, ... ]
+//
+//   HINT(S):
+//   - There may be more than 1 'sale' that includes 5 or more items.
+//   - Individual transactions do not have either `name` or `numItems` properties, we'll have to add them to the output.
+// */
+var bigSpenders = transactions.filter(function(item){
+  if(item.type === "sale"){
+    return item.items.length >= 5;
+  }
+}).map(function(item){
+  return ( { name: item.customer, numItems: item.items.length})
+})
 
 
-// --------------------------------------------------
-// QUESTION 07
-// --------------------------------------------------
-/*
-  Create an array of information about the 'sale' transactions which include 5 or more items.
+console.log('The "big spenders" are:', bigSpenders );
+//
+//
+// // --------------------------------------------------
+// // QUESTION 08
+// // --------------------------------------------------
+// /*
+//   Calculate the sum of the *first* 'sale' transaction.
+//
+//   HINT(S):
+//   - Transactions don't have 'prices', but their 'items' do!
+// */
+var sumSales =
 
-  The array should resemble the following:
-  [ { name: 'Customer Name', numItems: 5 }, ... ]
+transactions.filter(function(item){
+  return item.type === "sale"
+})[0].items.reduce(function(sum, item){
+  return sum += item.price;
+},0)
 
-  HINT(S):
-  - There may be more than 1 'sale' that includes 5 or more items.
-  - Individual transactions do not have either `name` or `numItems` properties, we'll have to add them to the output.
-*/
-var bigSpenders;
+console.log( 'The sum of the first sale is:', sumSales );
 
-console.log( 'The "big spenders" are:', bigSpenders );
-
-
-// --------------------------------------------------
-// QUESTION 08
-// --------------------------------------------------
-/*
-  Calculate the sum of the *first* 'sale' transaction.
-
-  HINT(S):
-  - Transactions don't have 'prices', but their 'items' do!
-*/
-var sumSales;
-
-console.log( 'The sum of all sales is:', sumSales );
-
-
-// --------------------------------------------------
-// QUESTION 09
-// --------------------------------------------------
-/*
-  Calculate the sum of *all* 'purchase' transactions.
-
-  HINT(S):
-  - Your solution to 'QUESTION 08' is a good starting point!
-  - Make sure to include 'price' information from *all* purchases.
-*/
-
-var sumPurchases;
-
+//
+// // --------------------------------------------------
+// // QUESTION 09
+// // --------------------------------------------------
+// /*
+//   Calculate the sum of *all* 'purchase' transactions.
+//
+//   HINT(S):
+//   - Your solution to 'QUESTION 08' is a good starting point!
+//   - Make sure to include 'price' information from *all* purchases.
+// */
+//
+var sumPurchases = transactions.filter(function(transaction){
+  return transaction.type === "purchase";
+}).map(function(transaction){
+  return transaction.items;
+// })
+// }) // // .map(function(item){
+// //   return item.price;
+}).reduce(function(sum, transaction){
+  return sum.concat(transaction);
+},[]).reduce(function(sum, transaction){
+  return sum += transaction.price;
+},0)
 console.log( 'The sum of all purhcases is:', sumPurchases );
-
-
-// --------------------------------------------------
-// QUESTION 10
-// --------------------------------------------------
-/*
-  Calculate the company's net profit.
-
-  This number will be positive if the sum of the sales is greater than the amount spent on purchases.
-
-  Otherwise, this number will be negative.
-
-  HINT(S):
-  - Unlike 'QUESTION 08' and 'QUESTION 09', here we're interested in both 'sale' and 'purchase' transactions.
-*/
-var netProfit;
+//
+//
+// // --------------------------------------------------
+// // QUESTION 10
+// // --------------------------------------------------
+// /*
+//   Calculate the company's net profit.
+//
+//   This number will be positive if the sum of the sales is greater than the amount spent on purchases.
+//
+//   Otherwise, this number will be negative.
+//
+//   HINT(S):
+//   - Unlike 'QUESTION 08' and 'QUESTION 09', here we're interested in both 'sale' and 'purchase' transactions.
+// */
+var netProfit = transactions.map(function(transaction){
+  return transaction.items;
+}).reduce(function(sum, object){
+  return sum.concat(object);
+},[]).reduce(function(sum, object){
+  return sum += object.price;
+},0)
 
 console.log( 'The net profit is:', netProfit );
 
-
-// --------------------------------------------------
-// QUESTION 11
-// --------------------------------------------------
-/*
-  Calculate the most items sold as part of single transaction.
-
-  HINTS:
-  - The result of this calculation should be a number (not an array, object, or other data type).
-*/
-var mostItems;
+//
+// // --------------------------------------------------
+// // QUESTION 11
+// // --------------------------------------------------
+// /*
+//   Calculate the most items sold as part of single transaction.
+//
+//   HINTS:
+//   - The result of this calculation should be a number (not an array, object, or other data type).
+// */
+var mostItems = transactions.filter(function(transaction){
+  return transaction.type === "sale";
+}).map(function(transaction){
+  return transaction.items;
+}).map(function(transaction){
+  return transaction.length;
+}).reduce(function(largestNumber, number){
+  if(number > largestNumber){
+    return number;
+  }
+  else {
+    return largestNumber;
+  }
+},0)
 
 console.log( 'The most items sold in a single transaction is:', mostItems );
 
-
-// --------------------------------------------------
-// QUESTION 12
-// --------------------------------------------------
-/*
-  Calculate the sum of the 'purchase' with the fewest items.
-*/
-var sumOfSmallestPurchase;
+//
+// // --------------------------------------------------
+// // QUESTION 12
+// // --------------------------------------------------
+// /*
+//   Calculate the sum of the 'purchase' with the fewest items.
+// */
+var sumOfSmallestPurchase = transactions.filter(function(transaction){
+  return transaction.type === "purchase";
+}).map(function(purchaseTransaction){
+  return purchaseTransaction.items;
+}).map(function(purchaseTransaction){
+  return purchaseTransaction.length;
+}).reduce(function(small,item){
+  if(small > item ){
+  return item
+  }
+  else {
+    return small
+  }
+},transactions[0].items.length)
 
 console.log( 'The sum of the smallest purchase is:', sumOfSmallestPurchase );
